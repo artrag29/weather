@@ -1,0 +1,7 @@
+weather_info.settings:
+  path: '/admin/config/services/weather-info'
+  defaults:
+    _form: '\Drupal\weather_info\Form\WeatherInfoConfigForm'
+    _title: 'Weather Info Settings'
+  requirements:
+    _permission: 'administer site configuration'

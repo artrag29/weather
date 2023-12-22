@@ -1,0 +1,40 @@
+<?php
+
+use Drupal\Core\Config\FileStorage;
+
+/**
+ * Implements hook_install().
+ */
+function weather_info_install(): void {
+  // Get the path to the module.
+  $module_handler = \Drupal::service('module_handler');
+  $module_path = $module_handler->getModule('weather_info')->getPath();
+
+  // Path to the YAML configuration files.
+  $config_path = $module_path . '/config/optional';
+  $source = new FileStorage($config_path);
+
+  // Forcefully update google_place_autocomplete.settings if it already exists.
+  $google_place_config_name = 'google_place_autocomplete.settings';
+  $weather_info_config_name = 'weather_info.settings';
+
+  // Check if the google_place_autocomplete settings already exist.
+  if (\Drupal::config($google_place_config_name)->get()) {
+    // Read the default configuration.
+    $default_config = $source->read($google_place_config_name);
+    // Set and save the default configuration forcefully.
+    \Drupal::configFactory()->getEditable($google_place_config_name)
+      ->setData($default_config)
+      ->save(TRUE);
+  }
+
+  // Import weather_info.settings configuration if it does not exist yet.
+  if (!\Drupal::config($weather_info_config_name)->get()) {
+    \Drupal::configFactory()->getEditable($weather_info_config_name)
+      ->setData($source->read($weather_info_config_name))
+      ->save();
+  }
+
+  // Clear caches if necessary.
+  \Drupal::service('cache.config')->deleteAll();
+}

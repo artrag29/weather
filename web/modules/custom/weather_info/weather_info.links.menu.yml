@@ -1,0 +1,6 @@
+weather_info.admin_settings:
+  title: 'Weather Info Settings'
+  description: 'Configure Weather Info Module.'
+  parent: system.admin_config_services
+  route_name: weather_info.settings
+  weight: 100

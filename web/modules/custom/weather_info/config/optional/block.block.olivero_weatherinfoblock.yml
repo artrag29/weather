@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - weather_info
+  theme:
+    - olivero
+id: olivero_weatherinfoblock
+theme: olivero
+region: content
+weight: 0
+provider: null
+plugin: weather_info_block
+settings:
+  id: weather_info_block
+  label: 'Weather Info Block'
+  label_display: '0'
+  provider: weather_info
+visibility: {  }
