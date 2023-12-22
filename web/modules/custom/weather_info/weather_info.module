@@ -1,0 +1,11 @@
+<?php
+/**
+ * Implements hook_theme().
+ */
+function weather_info_theme($existing, $type, $theme, $path): array {
+  return [
+    'weather_info' => [
+      'variables' => ['weather_data' => NULL],
+    ],
+  ];
+}
