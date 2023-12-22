@@ -1,0 +1,14 @@
+google_maps.places:
+  header: true
+  js:
+    https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places: { type: external, minified: true }
+
+google_place_autocomplete:
+  js:
+    js/google_place_autocomplete.js: { }
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings
+    - google_place_autocomplete/google_maps.places

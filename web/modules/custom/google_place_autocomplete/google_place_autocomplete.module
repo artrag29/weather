@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Contains google_place_autocomplete.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function google_place_autocomplete_theme($existing, $type, $theme, $path) {
+  return [
+    'google_place_autocomplete' => [
+      'render element' => 'element',
+      'file' => 'google_place_autocomplete.preprocess.inc',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ */
+function google_place_autocomplete_field_widget_single_element_google_place_autocomplete_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  $element['#attached']['library'][] = 'google_place_autocomplete/google_place_autocomplete';
+}
+
+/**
+ * Implements hook_js_alter().
+ */
+function google_place_autocomplete_js_alter(&$javascript, AttachedAssetsInterface $assets) {
+  if (isset($javascript['https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places'])) {
+    $apiKeyName = \Drupal::configFactory()->get('google_place_autocomplete.settings')->get('api_key_name');
+    if (!empty($apiKeyName)) {
+      /** @var \Drupal\key\KeyRepository $keyRepository */
+      $keyRepository = \Drupal::service('key.repository');
+      $apiKey = $keyRepository->getKey($apiKeyName)->getKeyValue();
+      $javascript['https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places']['data'] = "https://maps.googleapis.com/maps/api/js?key=$apiKey&libraries=places";
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "name": "drupal/google_place_autocomplete",
+    "type": "drupal-module",
+    "description": "Provide a Google Places Autocomplete suggestion of address.",
+    "keywords": [
+        "Drupal",
+        "Google Places",
+        "Autocomplete"
+    ],
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/google_place_autocomplete",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "http://drupal.org/project/issues/google_place_autocomplete",
+        "source": "http://cgit.drupalcode.org/google_place_autocomplete"
+    },
+    "require": {
+        "drupal/core": "^8.8 || ^9 || ^10",
+        "drupal/key": "^1.15"
+    }
+}
