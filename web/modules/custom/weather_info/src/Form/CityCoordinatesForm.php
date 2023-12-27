@@ -94,6 +94,11 @@ class CityCoordinatesForm extends FormBase {
       '#ajax' => [
         'callback' => '::weatherInfoAjaxSubmit',
         'wrapper' => 'weather-info-results',
+        'event' => 'click',
+        'progress' => [
+          'type' => 'throbber',
+          'message' => $this->t('Loading...'),
+        ],
       ],
     ];
 
@@ -127,9 +132,13 @@ class CityCoordinatesForm extends FormBase {
 
     $latitude = $form_state->getValue('location_lat');
     $longitude = $form_state->getValue('location_lng');
+    if ($latitude === "" && $longitude ==="") {
+      $weather_data['not_exist_city'] = TRUE;
+    } else {
+      // Get weather information using your service
+      $weather_data = $this->weatherInfoService->getWeatherData($latitude, $longitude);
+    }
 
-    // Get weather information using your service
-    $weather_data = $this->weatherInfoService->getWeatherData($latitude, $longitude);
 
     $form['results'] = [
       '#theme' => 'weather_info',

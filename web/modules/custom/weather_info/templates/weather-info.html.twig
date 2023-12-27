@@ -1,11 +1,16 @@
 <div class="weather-info-container">
   {% if weather_data %}
-    <div class="weather-info">
-      <h2>Weather Information</h2>
-      <div><strong>Temperature:</strong> {{ weather_data.temperature }}°C</div>
-      <div><strong>Humidity:</strong> {{ weather_data.humidity }}%</div>
-      <div class="description"><strong>Description:</strong> <span>{{ weather_data.description }}</span> <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" /></div>
-    </div>
+   {% if weather_data.not_exist_city %}
+     <div class="weather-info-no-data">Weather information in this city is currently unavailable.</div>
+   {% else %}
+     <div class="weather-info">
+       <h2>Weather Information</h2>
+       <div><strong>Temperature:</strong> {{ weather_data.temperature }}°C</div>
+       <div><strong>Humidity:</strong> {{ weather_data.humidity }}%</div>
+       <div class="description"><strong>Description:</strong> <span>{{ weather_data.description }}</span> <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" /></div>
+     </div>
+   {% endif %}
+
   {% else %}
     <div class="weather-info-no-data">Weather information is currently unavailable.</div>
   {% endif %}
